@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('medicos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 50);
-            $table->string('apellido', 50);
-            $table->string('especialidad', 50);
-            $table->string('telefono', 15);
-            $table->string('email')->unique();
+            // Relación con la tabla usuarios
+            $table->unsignedBigInteger('usuario_id')->unique();
+            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
+
+            $table->string('apellido', 100);
+            $table->string('nro_matricula', 50)->unique();
+            $table->string('especialidad', 100);
+            $table->json('horarios_disponibilidad');
+            $table->string('consultorio', 10);
             $table->timestamps();
         });
     }
@@ -30,4 +34,3 @@ return new class extends Migration
         Schema::dropIfExists('medicos');
     }
 };
-
