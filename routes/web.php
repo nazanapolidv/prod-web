@@ -16,6 +16,11 @@ Route::get('prueba2', function () {
     return view('prueba2');
 })->name('prueba2');
 
+Route::get('home', function () {
+    return view('welcome');
+})->name('home');
+
+
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
