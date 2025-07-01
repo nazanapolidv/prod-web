@@ -46,17 +46,39 @@ new #[Layout('layouts.guest')] class extends Component
                 <h1 class="title">Iniciar sesion</h1>
             </div>
             <div class="container_form">
-                <form class="flex flex-col" action="#" method="get" wire:submit.prevent="login">
-                    <label for="name">Usuario</label>
-                    <input class="rounded-lg" placeholder="jperez0001" type="text" id="name" name="name" required>
+                <form class="flex flex-col" wire:submit.prevent="login">
+                    <label for="email">Email</label>
+                    <input
+                        class="rounded-lg"
+                        placeholder="usuario@ejemplo.com"
+                        type="email"
+                        id="email"
+                        wire:model="form.email"
+                        required>
 
                     <label for="password">Contraseña</label>
-                    <input class="rounded-lg" placeholder="********" type="password" id="password" name="password" required>
+                    <input
+                        class="rounded-lg"
+                        placeholder="********"
+                        type="password"
+                        id="password"
+                        wire:model="form.password"
+                        required>
+
+                    <div class="flex items-center">
+                        <input
+                            type="checkbox"
+                            id="remember"
+                            wire:model="form.remember">
+                        <label for="remember" class="ml-2">Recordarme</label>
+                    </div>
 
                     <button type="submit" class="primary_button">Ingresar</button>
                     <p class="text-center">- o -</p>
-                    <a href="registro.html" class="secondary_button">Registrarse</a>
-                    <p class="recuperar_contrasena text-center">¿Olvidaste tu contraseña?</p>
+                    <a href="{{ route('register') }}" class="secondary_button">Registrarse</a>
+                    <p class="recuperar_contrasena text-center">
+                        <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
+                    </p>
                 </form>
             </div>
         </div>
