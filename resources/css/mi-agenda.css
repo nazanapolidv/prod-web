@@ -1,0 +1,59 @@
+.miagenda-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.heading {
+    margin-bottom: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+}
+
+thead {
+    background-color: #eceff1;
+}
+
+th,
+td {
+    padding: 16px;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+@media screen and (max-width: 768px) {
+    table {
+        font-size: 0.9rem;
+    }
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: #1976d2;
+    background-color: #fff;
+}
+
+select option {
+    background-color: #fff;
+    color: #333;
+}
