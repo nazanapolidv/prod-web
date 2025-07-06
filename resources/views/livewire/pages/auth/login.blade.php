@@ -38,8 +38,8 @@ new #[Layout('layouts.guest')] class extends Component
         <!-- Session Status -->
         <div class="container_inicio_sesion">
             <div class="main_image">
-                <a href="{{ route('home') }}" class="logo">
-                    <img src="{{asset('logo-removebg-preview.png')}}" alt="Hospital Polaco">
+                <a href="{{ route('home') }}" class="logo flex justify-center items-center w-auto">
+                    <img src="{{ Vite::asset('resources/assets/logo.png') }}" alt="Banner de inicio de sesión">
                 </a>
             </div>
             <div>

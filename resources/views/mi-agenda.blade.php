@@ -5,19 +5,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mi salud</title>
-    <link rel="stylesheet" href="../css/styles.css" />
-    <link rel="stylesheet" href="../css/mi-agenda.css" />
 </head>
 
 <body>
     <header>
         <div class="container_header">
             <div class="logo">
-                <a href="../index.html"><img src="../assets/logo-removebg-preview.png" alt="Logo" /></a>
+                <a href="{{route('home')}}"><img src="../assets/logo-removebg-preview.png" alt="Logo" /></a>
             </div>
             <nav class="menu">
                 <ul class="menu_list">
-                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="{{route('home')}}">Inicio</a></li>
                     <li><a href="misalud.html">Mi Salud</a></li>
                     <li><a href="contacto.html">Contacto</a></li>
                 </ul>
@@ -102,7 +100,7 @@
     <footer>
         <div class="container_footer">
             <div class="logo">
-                <a href="../index.html"><img src="../assets/logo-removebg-preview.png" alt="Logo" /></a>
+                <a href="{{route('home')}}"><img src="../assets/logo-removebg-preview.png" alt="Logo" /></a>
             </div>
             <div class="contact_info">
                 <p><b>Hospital Polaco</b></p>

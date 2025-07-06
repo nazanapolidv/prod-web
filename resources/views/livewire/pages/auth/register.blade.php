@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -10,79 +10,120 @@ use Livewire\Volt\Component;
 
 new #[Layout('layouts.guest')] class extends Component
 {
-    public string $name = '';
-    public string $email = '';
-    public string $password = '';
-    public string $password_confirmation = '';
+  public string $nombre = '';
+  public string $apellido = '';
+  public string $tipo_doc = '';
+  public string $documento = '';
+  public string $genero = '';
+  public string $fecha_nac = '';
+  public string $telefono = '';
+  public string $email = '';
+  public string $password = '';
+  public string $password_confirmation = '';
 
-    /**
-     * Handle an incoming registration request.
-     */
-    public function register(): void
-    {
-        $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
-        ]);
+  public function register(): void
+  {
+    $validated = $this->validate([
+      'nombre' => 'required|string|max:255',
+      'apellido' => 'required|string|max:255',
+      'tipo_doc' => 'required|string',
+      'documento' => 'required|numeric',
+      'genero' => 'required|string',
+      'fecha_nac' => 'required|date',
+      'telefono' => 'required|string|max:20',
+      'email' => 'required|email|max:255|unique:usuarios,email',
+      'password' => ['required', 'confirmed', Rules\Password::defaults()],
+    ]);
 
-        $validated['password'] = Hash::make($validated['password']);
+    $validated['password'] = Hash::make($validated['password']);
+    $validated['rol'] = 'paciente'; // Rol por defecto
 
-        event(new Registered($user = User::create($validated)));
+    $user = Usuario::create($validated);
 
-        Auth::login($user);
+    event(new Registered($user));
+    Auth::login($user);
 
-        $this->redirect(route('dashboard', absolute: false), navigate: true);
-    }
-}; ?>
-
+    $this->redirect(route('dashboard'), navigate: true);
+  }
+};
+?>
+@vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/registro.css'])
 <div>
-    <form wire:submit="register">
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+  <div class="container_registro">
+    <div class="main_image">
+      <a href="{{route('home')}}" class="logo flex justify-center items-center w-auto">
+        <img
+          src="{{ Vite::asset('resources/assets/logo.png') }}"
+          alt="Hospital Polaco" />
+      </a>
+    </div>
+    <div class="form_group">
+      <h1 class="title">Registrarse</h1>
+    </div>
+    <div class="container_form">
+      <form wire:submit.prevent="register">
+        <div class="form_group">
+          <label for="nombre">Nombre</label>
+          <input wire:model="nombre" placeholder="Juan" type="text" id="nombre" name="nombre" required />
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="form_group">
+          <label for="apellido">Apellido</label>
+          <input wire:model="apellido" placeholder="Perez" type="text" id="apellido" name="apellido" required />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="form_group">
+          <label for="tipo_doc">Tipo de documento</label>
+          <select wire:model="tipo_doc" name="tipo_doc" id="tipo_doc" required>
+            <option value="" disabled selected>Selecciona</option>
+            <option value="dni">DNI</option>
+            <option value="pasaporte">Pasaporte</option>
+            <option value="cedula">Cédula de identidad</option>
+          </select>
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div class="form_group">
+          <label for="documento">Numero de documento</label>
+          <input wire:model="documento" placeholder="Ej: 12345678" type="number" id="documento" name="documento" required />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}" wire:navigate>
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+        <div class="form_group">
+          <label for="genero">Género</label>
+          <select wire:model="genero" name="genero" id="genero" required>
+            <option value="" disabled selected>Selecciona</option>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+            <option value="no-binario">No binario</option>
+          </select>
         </div>
-    </form>
+
+        <div class="form_group">
+          <label for="fecha_nac">Fecha de nacimiento</label>
+          <input wire:model="fecha_nac" type="date" id="fecha_nac" name="fecha_nac" required />
+        </div>
+
+        <div class="form_group">
+          <label for="telefono">Celular</label>
+          <input wire:model="telefono" placeholder="011 2230 4880" type="tel" id="telefono" name="telefono" required />
+        </div>
+
+        <div class="form_group">
+          <label for="email">Mail</label>
+          <input wire:model="email" placeholder="ejemplo@gmail.com" type="email" id="email" name="email" required />
+        </div>
+
+        <div class="form_group">
+          <label for="password">Contraseña</label>
+          <input wire:model="password" type="password" id="password" name="password" required />
+        </div>
+
+        <div class="form_group">
+          <label for="password_confirmation">Confirmar contraseña</label>
+          <input wire:model="password_confirmation" type="password" id="password_confirmation" name="password_confirmation" required />
+        </div>
+
+        <button type="submit" class="primary_button">Registrarse</button>
+      </form>
+    </div>
+  </div>
 </div>

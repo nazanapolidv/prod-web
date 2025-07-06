@@ -8,17 +8,25 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('prueba', function () {
-    return view('prueba');
-})->name('prueba');
-
-Route::get('prueba2', function () {
-    return view('prueba2');
-})->name('prueba2');
-
 Route::get('home', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('registro', function () {
+    return view('register');
+})->name('registro');
+
+Route::get('login', function () {
+    return view('login');
+})->name('login');
+
+Route::get('contacto', function () {
+    return view('contacto');
+})->name('contacto');
+
+Route::get('mi-salud', function () {
+    return view('mi-salud');
+})->name('mi-salud');
 
 
 Route::view('profile', 'profile')
