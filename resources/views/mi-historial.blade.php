@@ -5,6 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mi salud</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/mi-historial.css" />
+
+    @vite(['resources/css/mi-historial.css', 'resources/css/app.css'])
+
 </head>
 
 <body>
@@ -21,9 +26,7 @@
                 </ul>
             </nav>
             <div class="session">
-                <a href="inicio-sesion.html"><img
-                        src="../assets/profile.png"
-                        alt="iniciar sesion o registrarse" /></a>
+                <a href="inicio-sesion.html"><img src="{{asset('profile.png')}}" alt="iniciar sesion o registrarse"></a>
             </div>
         </div>
     </header>
@@ -73,9 +76,9 @@
             </div>
             <div class="footer_content">
                 <div class="social_media">
-                    <a href="#"><img src="../assets/fb.png" alt="Facebook" /></a>
-                    <a href="#"><img src="../assets/x.png" alt="X" /></a>
-                    <a href="#"><img src="../assets/instagram.png" alt="Instagram" /></a>
+                    <a href="#"><img src="{{asset('fb.png')}}" alt="Facebook"></a>
+                    <a href="#"><img src="{{asset('x.png')}}" alt="X"></a>
+                    <a href="#"><img src="{{asset('instagram.png')}}" alt="Instagram"></a>
                 </div>
 
                 <div class="legal">
