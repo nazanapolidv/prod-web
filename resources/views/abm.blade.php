@@ -15,12 +15,12 @@
     <header>
         <div class="container_header">
             <div class="logo">
-                <a href="../index.html"><img src="{{asset('logo-removebg-preview.png')}}" alt="Hospital Polaco"></a>
+                <a href="{{route('home')}}"><img src="../assets/logo-removebg-preview.png" alt="Logo" /></a>
             </div>
             <nav class="menu">
                 <ul class="menu_list">
-                    <li><a href="{{'home'}}">Inicio</a></li>
-                    <li><a href="{{'abm'}}">Mi Salud</a></li>
+                    <li><a href="{{route('home')}}">Inicio</a></li>
+                    <li><a href="misalud.html">Mi Salud</a></li>
                     <li><a href="contacto.html">Contacto</a></li>
                 </ul>
             </nav>
@@ -66,7 +66,7 @@
     <footer>
         <div class="container_footer">
             <div class="logo">
-                <a href="../index.html"><img src="{{asset('logo-removebg-preview.png')}}" alt="Hospital Polaco"></a>
+                <a href="{{route('home')}}"><img src="../assets/logo-removebg-preview.png" alt="Logo" /></a>
             </div>
             <div class="contact_info">
                 <p><b>Hospital Polaco</b></p>

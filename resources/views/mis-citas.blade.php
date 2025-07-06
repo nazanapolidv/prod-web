@@ -65,10 +65,7 @@
     <footer>
         <div class="container_footer">
             <div class="logo">
-                <a href="../index.html">
-                    <img src="{{asset('logo-removebg-preview.png')}}" alt="Hospital Polaco">
-
-                </a>
+                <a href="{{route('home')}}"><img src="../assets/logo-removebg-preview.png" alt="Logo" /></a>
             </div>
             <div class="contact_info">
                 <p><b>Hospital Polaco</b></p>
