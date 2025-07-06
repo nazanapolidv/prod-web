@@ -7,25 +7,25 @@
     <title>ABM</title>
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/abm.css" />
+
+    @vite(['resources/css/abm.css', 'resources/css/app.css'])
 </head>
 
 <body>
     <header>
         <div class="container_header">
             <div class="logo">
-                <a href="../index.html"><img src="../assets/logo-removebg-preview.png" alt="Logo" /></a>
+                <a href="../index.html"><img src="{{asset('logo-removebg-preview.png')}}" alt="Hospital Polaco"></a>
             </div>
             <nav class="menu">
                 <ul class="menu_list">
-                    <li><a href="../index.html">Inicio</a></li>
-                    <li><a href="misalud.html">Mi Salud</a></li>
+                    <li><a href="{{'home'}}">Inicio</a></li>
+                    <li><a href="{{'abm'}}">Mi Salud</a></li>
                     <li><a href="contacto.html">Contacto</a></li>
                 </ul>
             </nav>
             <div class="session">
-                <a href="inicio-sesion.html"><img
-                        src="../assets/profile.png"
-                        alt="iniciar sesion o registrarse" /></a>
+                <a href="inicio-sesion.html"><img src="{{asset('profile.png')}}" alt="iniciar sesion o registrarse"></a>
             </div>
         </div>
     </header>
@@ -37,8 +37,7 @@
             <div class="container_especializaciones">
                 <div class="card_container">
                     <div class="card">
-                        <img
-                            src="../assets/gestiondeusuario.png"
+                        <img src="{{asset('gestiondeusuario.png')}}"
                             alt="Gestión de usuarios" />
                         <div class="card-content">
                             <h3>Gestión de usuarios</h3>
@@ -46,14 +45,14 @@
                         </div>
                     </div>
                     <div class="card">
-                        <img src="../assets/estadisticas.png" alt="estadisticas" />
+                        <img src="{{asset('estadisticas.png')}}" alt="estadisticas" />
                         <div class="card-content">
                             <h3>Estadísticas</h3>
                             <p>Visor de estadísticas de pacientes o médicos</p>
                         </div>
                     </div>
                     <div class="card">
-                        <img src="../assets/registros.png" alt="Registros" />
+                        <img src="{{asset('registros.png')}}" alt="Registros" />
                         <div class="card-content">
                             <h3>Registros</h3>
                             <p>Control de registros y egresos de empleados</p>
@@ -67,7 +66,7 @@
     <footer>
         <div class="container_footer">
             <div class="logo">
-                <a href="../index.html"><img src="../assets/logo-removebg-preview.png" alt="Logo" /></a>
+                <a href="../index.html"><img src="{{asset('logo-removebg-preview.png')}}" alt="Hospital Polaco"></a>
             </div>
             <div class="contact_info">
                 <p><b>Hospital Polaco</b></p>
@@ -76,9 +75,9 @@
             </div>
             <div class="footer_content">
                 <div class="social_media">
-                    <a href="#"><img src="../assets/fb.png" alt="Facebook" /></a>
-                    <a href="#"><img src="../assets/x.png" alt="X" /></a>
-                    <a href="#"><img src="../assets/instagram.png" alt="Instagram" /></a>
+                    <a href="#"><img src="{{asset('fb.png')}}" alt="Facebook"></a>
+                    <a href="#"><img src="{{asset('x.png')}}" alt="X"></a>
+                    <a href="#"><img src="{{asset('instagram.png')}}" alt="Instagram"></a>
                 </div>
 
                 <div class="legal">

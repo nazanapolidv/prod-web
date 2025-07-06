@@ -17,8 +17,8 @@
             </div>
             <nav class="menu">
                 <ul class="menu_list">
-                    <li><a href="../index.html">Inicio</a></li>
-                    <li><a href="misalud.html">Mi Salud</a></li>
+                    <li><a href="{{'home'}}">Inicio</a></li>
+                    <li><a href="{{'mi-salud'}}">Mi Salud</a></li>
                     <li><a href="contacto.html">Contacto</a></li>
                 </ul>
             </nav>
