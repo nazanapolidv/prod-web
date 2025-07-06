@@ -28,6 +28,10 @@ Route::get('mi-salud', function () {
     return view('mi-salud');
 })->name('mi-salud');
 
+Route::get('mis-citas', function () {
+    return view('mis-citas');
+})->name('mis-citas');
+
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
