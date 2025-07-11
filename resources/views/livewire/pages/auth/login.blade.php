@@ -65,14 +65,6 @@ new #[Layout('layouts.guest')] class extends Component
                         wire:model="form.password"
                         required>
 
-                    <div class="flex items-center">
-                        <input
-                            type="checkbox"
-                            id="remember"
-                            wire:model="form.remember">
-                        <label for="remember" class="ml-2">Recordarme</label>
-                    </div>
-
                     <button type="submit" class="primary_button">Ingresar</button>
                     <p class="text-center">- o -</p>
                     <a href="{{ route('register') }}" class="secondary_button">Registrarse</a>

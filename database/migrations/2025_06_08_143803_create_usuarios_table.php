@@ -13,9 +13,15 @@ return new class extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre',100);
-            $table->string('email',100)->unique();
-            $table->string('password',255);
+            $table->string('nombre', 100);
+            $table->string('apellido', 100);
+            $table->enum('tipo_doc', ['dni', 'pasaporte', 'cedula']);
+            $table->string('documento', 20)->unique();
+            $table->enum('genero', ['masculino', 'femenino', 'no-binario']);
+            $table->date('fecha_nac');
+            $table->string('telefono', 20);
+            $table->string('email', 100)->unique();
+            $table->string('password', 255);
             $table->enum('rol', ['paciente', 'medico', 'administrador']);
             $table->timestamps();
         });

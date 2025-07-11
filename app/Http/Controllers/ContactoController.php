@@ -3,63 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contacto;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ContactoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the contact form.
      */
-    public function index()
+    public function index(): View
     {
-        //
+        return view('contacto');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Handle the contact form submission.
      */
-    public function create()
+    public function store(Request $request): RedirectResponse
     {
-        //
-    }
+        $request->validate([
+            'name' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'email', 'max:100'],
+            'message' => ['required', 'string', 'max:1000'],
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        Contacto::create([
+            'nombre' => $request->name,
+            'email' => $request->email,
+            'mensaje' => $request->message,
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Contacto $contacto)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Contacto $contacto)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Contacto $contacto)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Contacto $contacto)
-    {
-        //
+        return redirect()->route('contacto')->with('success', '¡Gracias por tu mensaje! Te responderemos pronto.');
     }
 }

@@ -16,7 +16,7 @@
         <div class="container_header">
             <div class="logo">
                 <a href="../index.html">
-                    <img src="{{asset('logo-removebg-preview.png')}}" alt="Hospital Polaco">
+                    <img src="{{Vite::asset('resources/assets/logo.png')}}" alt="Hospital Polaco">
                 </a>
 
             </div>
@@ -29,7 +29,7 @@
             </nav>
             <div class="session">
                 <a href="inicio-sesion.html">
-                    <img src="{{asset('profile.png')}}" alt="iniciar sesion o registrarse">
+                    <img src="{{Vite::asset('resources/assets/profile.png')}}" alt="iniciar sesion o registrarse">
 
                 </a>
             </div>
@@ -65,7 +65,7 @@
     <footer>
         <div class="container_footer">
             <div class="logo">
-                <a href="{{route('home')}}"><img src="../assets/logo-removebg-preview.png" alt="Logo" /></a>
+                <a href="{{route('home')}}"><img src="{{Vite::asset('resources/assets/logo.png')}}" alt="Logo" /></a>
             </div>
             <div class="contact_info">
                 <p><b>Hospital Polaco</b></p>

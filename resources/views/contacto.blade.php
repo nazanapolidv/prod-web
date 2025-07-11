@@ -35,16 +35,35 @@
                 <h1 class="title">Contacto</h1>
                 <p class="description_main">Si tenes alguna consulta o necesitas más información, no dudes en ponerte en contacto con nosotros.</br>Estamos para ayudarte.</p>
             </div>
+            
+            @if (session('success'))
+                <div style="background: #d4edda; color: #155724; padding: 10px; margin: 10px; border: 1px solid #c3e6cb; border-radius: 4px;">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div style="background: #f8d7da; color: #721c24; padding: 10px; margin: 10px; border: 1px solid #f5c6cb; border-radius: 4px;">
+                    <strong>Por favor corrige los siguientes errores:</strong>
+                    <ul style="margin: 10px 0 0 20px;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="container_form">
-                <form action="#" method="post">
+                <form action="{{ route('contacto.store') }}" method="POST">
+                    @csrf
                     <label for="name">Nombre</label>
-                    <input placeholder="Juan Perez" type="text" id="name" name="name" required>
+                    <input placeholder="Juan Perez" type="text" id="name" name="name" value="{{ old('name') }}" required>
 
                     <label for="email">Correo electrónico</label>
-                    <input placeholder="ejemplo@gmail.com" type="email" id="email" name="email" required>
+                    <input placeholder="ejemplo@gmail.com" type="email" id="email" name="email" value="{{ old('email') }}" required>
 
                     <label for="message">Mensaje</label>
-                    <textarea placeholder="Dejanos tu mensaje" id="message" name="message" rows="4" required></textarea>
+                    <textarea placeholder="Dejanos tu mensaje" id="message" name="message" rows="4" required>{{ old('message') }}</textarea>
 
                     <button type="submit">Enviar</button>
                 </form>
@@ -54,7 +73,7 @@
     <footer>
         <div class="container_footer">
             <div class="logo">
-                <a href="{{route('home')}}"><img src="../assets/logo-removebg-preview.png" alt="Logo"></a>
+                <a href="{{route('home')}}"><img src="{{Vite::asset('resources/assets/logo.png')}}" alt="Logo"></a>
             </div>
             <div class="contact_info">
                 <p><b>Hospital Polaco</b></p>

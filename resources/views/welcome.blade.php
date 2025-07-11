@@ -80,11 +80,11 @@
                     <div class="card">
                         <img src="{{Vite::asset('resources/assets/neurologia.png')}}" alt="Neurología">
                         <div class="card-content">
-                            <h3>Neurología</h3>
+                            <h3 class="text-lg font-semibold text-black-800 text-center">Neurología</h3>
                             <p>Diagnóstico y tratamiento de trastornos del sistema nervioso.</p>
                         </div>
                     </div>
-                    <div class="card bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 w-[240px] h-[320px]">
+                    <div class="card">
                         <img src="{{Vite::asset('resources/assets/cardiologia.png')}}" alt="Cardiología" class="w-full h-32 object-contain p-4">
                         <div class="card-content">
                             <h3 class="text-lg font-semibold text-black-800 text-center">Cardiología</h3>
@@ -94,7 +94,7 @@
                     <div class="card">
                         <img src="{{Vite::asset('resources/assets/estetoscopio.png')}}" alt="Clínica general">
                         <div class="card-content">
-                            <h3>Clínica general</h3>
+                            <h3 class="text-lg font-semibold text-black-800 text-center">Clínica general</h3>
                             <p>Atención médica integral para el cuidado y seguimiento de la salud general.</p>
                         </div>
                     </div>

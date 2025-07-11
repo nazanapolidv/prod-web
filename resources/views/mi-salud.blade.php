@@ -23,15 +23,26 @@
                 </ul>
             </nav>
             <div class="session">
-                <a href="{{route('register')}}"><img
-                        src="{{ Vite::asset('resources/assets/profile.png') }}"
-                        alt="iniciar sesion o registrarse" /></a>
+                @auth
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                            @csrf
+                            <button type="submit" style="background: none; border: none; color: inherit; cursor: pointer;">
+                                Cerrar sesión
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <a href="{{route('login')}}">
+                        <img src="{{ Vite::asset('resources/assets/profile.png') }}" alt="iniciar sesion o registrarse" />
+                    </a>
+                @endauth
             </div>
         </div>
     </header>
     <main>
         <h2 class="title">Mi Salud</h2>
-        <h3 class="subtitle">¡Hola, <b>nombreUsuario</b>!</h3>
+        <h3 class="subtitle">¡Hola, <b>{{ Auth::user()->nombre ?? 'Usuario' }}</b>!</h3>
         <div class="container_mi_salud">
             <div class="card_container">
                 <div class="card">
@@ -44,6 +55,7 @@
                     </div>
                 </div>
                 <div class="card">
+                    <a href="{{route('mi-historial')}}">
                     <div class="card_image_container">
                         <img src="{{ Vite::asset('resources/assets/calendar.png') }}" alt="Historial" />
                     </div>
@@ -53,6 +65,7 @@
                             Consultá tu historial de atención en nuestros centros médicos
                         </p>
                     </div>
+                    </a>
                 </div>
                 <div class="card">
                     <div class="card_image_container">
