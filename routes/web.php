@@ -25,7 +25,7 @@ Route::get('mi-agenda', function () {
 
 Route::get('mi-historial', function () {
     return view('mi-historial');
-})->name('mi-historial');
+})->middleware('auth')->name('mi-historial');
 
 Route::get('abm', function () {
     return view('abm');

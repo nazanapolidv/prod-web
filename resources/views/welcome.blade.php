@@ -67,12 +67,21 @@
                 <p class="description_main text-center font-bold">Tu salud es nuestra prioridad. Ofrecemos atención médica de calidad y un equipo de profesionales dedicados a cuidar de vos y tu familia.</p>
             </div>
             <div class="container_button flex justify-center items-center">
+                @guest
                 <div class="button">
-                    <a class="primary_button" href="html/misalud.html">Solicitar turno</a>
+                    <a class="primary_button" href="{{ route('login') }}">Solicitar turno</a>
                 </div>
                 <div class="button">
-                    <a class="secondary_button" href="html/contacto.html">Consultar resultados</a>
+                    <a class="secondary_button" href="{{ route('login') }}">Consultar resultados</a>
                 </div>
+                @else
+                <div class="button">
+                    <a class="primary_button" href="{{ route('mi-salud') }}">Solicitar turno</a>
+                </div>
+                <div class="button">
+                    <a class="secondary_button" href="{{ route('mi-historial') }}">Consultar resultados</a>
+                </div>
+                @endguest
             </div>
             <div class="container_especializaciones">
                 <h2 class="subtitle">Especializaciones</h2>
