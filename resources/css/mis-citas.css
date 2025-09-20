@@ -39,6 +39,39 @@
     width: 60%;
 }
 
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    margin: 2rem auto;
+    max-width: 500px;
+    text-align: center;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.empty-state-icon {
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}
+
+.empty-state-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 1rem;
+}
+
+.empty-state-message {
+    color: #6c757d;
+    line-height: 1.6;
+    max-width: 400px;
+}
+
+
 @media screen and (max-width: 768px) {
     .card {
         width: 90%;

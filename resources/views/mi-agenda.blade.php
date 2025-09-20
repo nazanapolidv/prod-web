@@ -12,29 +12,7 @@
 </head>
 
 <body>
-    <header>
-        <div class="container_header">
-            <div class="logo">
-                <a href="../index.html">
-                    <img src="{{Vite::asset('resources/assets/logo.png')}}" alt="Hospital Polaco">
-                </a>
-
-            </div>
-            <nav class="menu">
-                <ul class="menu_list">
-                    <li><a href="{{'home'}}">Inicio</a></li>
-                    <li><a href="{{'mi-salud'}}">Mi Salud</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                </ul>
-            </nav>
-            <div class="session">
-                <a href="inicio-sesion.html">
-                    <img src="{{Vite::asset('resources/assets/profile.png')}}" alt="iniciar sesion o registrarse">
-
-                </a>
-            </div>
-        </div>
-    </header>
+    <x-header />
     <main>
         <div class="miagenda-container">
             <h2 class="title">Mi Agenda</h2>
@@ -105,31 +83,7 @@
             </table>
         </div>
     </main>
-    <footer>
-        <div class="container_footer">
-            <div class="logo">
-                <a href="{{route('home')}}"><img src="{{Vite::asset('resources/assets/logo.png')}}" alt="Logo" /></a>
-            </div>
-            <div class="contact_info">
-                <p><b>Hospital Polaco</b></p>
-                <p>hola@hospitalpolaco.com</p>
-                <p>0800 888 9090</p>
-            </div>
-            <div class="footer_content">
-                <div class="social_media">
-                    <a href="#"><img src="{{asset('fb.png')}}" alt="Facebook"></a>
-                    <a href="#"><img src="{{asset('x.png')}}" alt="X"></a>
-                    <a href="#"><img src="{{asset('instagram.png')}}" alt="Instagram"></a>
-                </div>
-
-                <div class="legal">
-                    <p>©2025 Todos los derechos reservados</p>
-                    <p>Política de privacidad</p>
-                    <p>Términos y condiciones</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <x-footer />
 </body>
 
 </html>

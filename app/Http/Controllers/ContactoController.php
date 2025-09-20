@@ -28,12 +28,12 @@ class ContactoController extends Controller
             'message' => ['required', 'string', 'max:1000'],
         ]);
 
-        Contacto::create([
+        $contacto = Contacto::create([
             'nombre' => $request->name,
             'email' => $request->email,
             'mensaje' => $request->message,
         ]);
 
-        return redirect()->route('contacto')->with('success', '¡Gracias por tu mensaje! Te responderemos pronto.');
+        return redirect()->route('contacto')->with('success', '¡Gracias por tu mensaje! Te responderemos pronto. Tu número de seguimiento es: ' . $contacto->id);
     }
 }

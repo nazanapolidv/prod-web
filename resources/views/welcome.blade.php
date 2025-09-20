@@ -16,47 +16,7 @@
 </head>
 
 <body>
-    <header>
-        <div class="container_header">
-            <div class="logo">
-                <a href="/"><img src="{{Vite::asset('resources/assets/logo.png')}}" alt="Logo"></a>
-            </div>
-            <nav class="menu">
-                <ul class="menu_list">
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="{{route('mi-salud')}}">Mi Salud</a></li>
-                    <li><a href="{{route('contacto')}}">Contacto</a></li>
-                </ul>
-            </nav>
-            <div class="session">
-    @guest
-        <a href="{{ route('login') }}">
-            <img src="{{ Vite::asset('resources/assets/profile.png') }}" alt="Iniciar sesión o registrarse">
-        </a>
-    @else
-        <div class="dropdown">
-            <button class="user-button">
-                {{ Auth::user()->name }}
-            </button>
-
-            <div class="dropdown-menu">
-                @if(Auth::user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}">Panel Admin</a>
-                @elseif(Auth::user()->role === 'paciente')
-                    <a href="{{ route('paciente.turnos') }}">Mis Turnos</a>
-                @endif
-
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit">Cerrar sesión</button>
-                </form>
-            </div>
-        </div>
-    @endguest
-</div>
-
-        </div>
-    </header>
+    <x-header />
     <main>
         <div class="container_main">
             <div class="main_image">
@@ -111,32 +71,7 @@
             </div>
         </div>
     </main>
-    <footer>
-        <div class="container_footer">
-            <div class="logo">
-                <a href="/"><img src="{{Vite::asset('resources/assets/logo.png')}}" alt="Logo"></a>
-            </div>
-            <div class="contact_info">
-                <p><b>Hospital Polaco</b></p>
-                <p>hola@hospitalpolaco.com</p>
-                <p>0800 888 9090</p>
-            </div>
-            <div class="footer_content">
-                <div class="social_media">
-                    <a href="#"><img src="{{Vite::asset('resources/assets/fb.png')}}" alt="Facebook"></a>
-                    <a href="#"><img src="{{Vite::asset('resources/assets/x.png')}}" alt="X"></a>
-                    <a href="#"><img src="{{Vite::asset('resources/assets/instagram.png')}}" alt="Instagram"></a>
-                </div>
-
-                <div class="legal">
-                    <p>©2025 Todos los derechos reservados</p>
-                    <p>Política de privacidad</p>
-                    <p>Términos y condiciones</p>
-                </div>
-            </div>
-
-        </div>
-    </footer>
+    <x-footer />
 </body>
 
 </html>

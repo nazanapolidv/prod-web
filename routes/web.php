@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\MiHistorialController;
+use App\Http\Controllers\MisCitasController;
 use App\Http\Controllers\MiSaludController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,9 +13,8 @@ Route::get('dashboard', function () {
     return redirect('/');
 })->name('dashboard');
 
-Route::get('mis-citas', function () {
-    return view('mis-citas');
-})->name('mis-citas');
+Route::middleware('auth')->get('/mis-citas', [MisCitasController::class, 'index'])
+    ->name('mis-citas');
 
 Route::get('mi-salud', [MiSaludController::class, 'index'])
     ->middleware('auth')
@@ -23,9 +24,10 @@ Route::get('mi-agenda', function () {
     return view('mi-agenda');
 })->name('mi-agenda');
 
-Route::get('mi-historial', function () {
-    return view('mi-historial');
-})->middleware('auth')->name('mi-historial');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/mi-historial', [MiHistorialController::class, 'index'])
+        ->name('mi-historial');
+});
 
 Route::get('abm', function () {
     return view('abm');
