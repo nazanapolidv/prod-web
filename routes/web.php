@@ -24,6 +24,10 @@ Route::get('mi-agenda', function () {
     return view('mi-agenda');
 })->name('mi-agenda');
 
+Route::get('mi-perfil', function () {
+    return view('mi-perfil');
+})->name('mi-perfil');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/mi-historial', [MiHistorialController::class, 'index'])
         ->name('mi-historial');
