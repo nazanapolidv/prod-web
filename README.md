@@ -60,14 +60,14 @@ Las tablas relevantes incluyen: `usuarios`, `pacientes`, `medicos`, `especialida
 
 En una terminal:
 ```powershell
-php artisan serve --port=8001
+php artisan serve
 ```
 En otra terminal:
 
 ```powershell
 npm run dev
 ```
-Abrí: http://127.0.0.1:8001
+Abrí: http://127.0.0.1:8000
 
 ## 🧭 Rutas principales
 - `GET /` Home
