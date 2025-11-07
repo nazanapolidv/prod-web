@@ -63,7 +63,7 @@
 
             <div class="container_button">
                 <div class="button">
-                    <a class="primary_button" href="/html/misalud.html">Solicitar turno</a>
+                    <a class="primary_button" href="{{ route('solicitar-turno') }}">Solicitar turno</a>
                 </div>
             </div>
         </div>

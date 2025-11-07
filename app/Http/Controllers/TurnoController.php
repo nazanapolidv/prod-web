@@ -2,64 +2,142 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Especialidad;
+use App\Models\Medico;
 use App\Models\Turno;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TurnoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $usuario = Auth::user();
+        
+        $turnos = Turno::where('paciente_id', $usuario->id)
+            ->where('fecha', '>=', Carbon::today())
+            ->orderBy('fecha')
+            ->orderBy('hora')
+            ->with(['medico', 'especialidad'])
+            ->get();
+
+        return view('mis-citas', compact('turnos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $especialidades = Especialidad::orderBy('nombre')->get();
+        return view('solicitar-turno', compact('especialidades'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function getMedicos($especialidad_nombre)
+    {
+        $medicos = Medico::where('especialidad', $especialidad_nombre)
+            ->orderBy('apellido')
+            ->get()
+            ->map(function($medico) {
+                $usuario = $medico->usuario;
+                return [
+                    'id' => $medico->id,
+                    'nombre' => $usuario ? $usuario->nombre : '',
+                    'apellido' => $medico->apellido
+                ];
+            });
+        
+        return response()->json($medicos);
+    }
+
+    public function getHorarios(Request $request)
+    {
+        $request->validate([
+            'medico_id' => 'required|exists:medicos,id',
+            'fecha' => 'required|date|after_or_equal:today',
+        ]);
+
+        $medico_id = $request->medico_id;
+        $fecha = $request->fecha;
+        $medico = Medico::find($medico_id);
+        
+        if (!$medico || empty($medico->horarios_disponibilidad)) {
+            $horarios = [];
+            $start = 8 * 60;
+            $end = 17 * 60;
+            $step = 30;
+            
+            for ($i = $start; $i < $end; $i += $step) {
+                $horarios[] = sprintf('%02d:%02d', floor($i / 60), $i % 60);
+            }
+        } else {
+            $horarios = [];
+            $start = 8 * 60; 
+            $end = 17 * 60;  
+            $step = 30;      
+            
+            for ($i = $start; $i < $end; $i += $step) {
+                $horarios[] = sprintf('%02d:%02d', floor($i / 60), $i % 60);
+            }
+        }
+        
+        $turnosOcupados = Turno::where('medico_id', $medico_id)
+            ->where('fecha', $fecha)
+            ->pluck('hora')
+            ->map(function($hora) {
+                return Carbon::parse($hora)->format('H:i');
+            })
+            ->toArray();
+        
+        $horariosDisponibles = array_filter($horarios, function($hora) use ($turnosOcupados) {
+            return !in_array($hora, $turnosOcupados);
+        });
+        
+        return response()->json(array_values($horariosDisponibles));
+    }
+
     public function store(Request $request)
     {
-        //
+        $validado = $request->validate([
+            'especialidad_id' => 'required|exists:especialidades,id',
+            'medico_id' => 'required|exists:medicos,id',
+            'fecha' => 'required|date|after_or_equal:today',
+            'hora' => 'required',
+            'observaciones' => 'nullable|string|max:500',
+        ]);
+        
+        $existeTurno = Turno::where('medico_id', $request->medico_id)
+            ->where('fecha', $request->fecha)
+            ->where('hora', $request->hora)
+            ->exists();
+            
+        if ($existeTurno) {
+            return back()->withInput()->withErrors([
+                'hora' => 'El horario seleccionado ya no está disponible. Por favor, elige otro.'
+            ]);
+        }
+        
+        Turno::create([
+            'paciente_id' => Auth::id(),
+            'medico_id' => $request->medico_id,
+            'especialidad_id' => $request->especialidad_id,
+            'fecha' => $request->fecha,
+            'hora' => $request->hora,
+        ]);
+        
+        return redirect()->route('mis-citas')
+            ->with('success', 'Turno solicitado correctamente. Te informaremos cuando sea confirmado.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Turno $turno)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Turno $turno)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Turno $turno)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Turno $turno)
-    {
-        //
+        $turno = Turno::findOrFail($id);
+        
+        if ($turno->paciente_id != Auth::id()) {
+            abort(403, 'No autorizado');
+        }
+        
+        $turno->delete();
+        
+        return redirect()->route('mis-citas')
+            ->with('success', 'Turno cancelado correctamente.');
     }
 }

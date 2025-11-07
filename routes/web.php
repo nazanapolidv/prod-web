@@ -5,36 +5,39 @@ use App\Http\Controllers\MiHistorialController;
 use App\Http\Controllers\MisCitasController;
 use App\Http\Controllers\MiSaludController;
 use App\Http\Controllers\MiPerfilController;
+use App\Http\Controllers\TurnoController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
 
-// Temporary redirect from dashboard to home
 Route::get('dashboard', function () {
     return redirect('/');
 })->name('dashboard');
 
-Route::middleware('auth')->get('/mis-citas', [MisCitasController::class, 'index'])
-    ->name('mis-citas');
-
-Route::get('mi-salud', [MiSaludController::class, 'index'])
-    ->middleware('auth')
-    ->name('mi-salud');
+Route::middleware('auth')->group(function () {
+    Route::get('/solicitar-turno', [TurnoController::class, 'create'])->name('solicitar-turno');
+    Route::post('/turnos', [TurnoController::class, 'store'])->name('turnos.store');
+    Route::delete('/turnos/{turno}', [TurnoController::class, 'destroy'])->name('turnos.destroy');
+    Route::get('/turnos/medicos/{especialidad}', [TurnoController::class, 'medicos'])->name('turnos.medicos');
+    Route::get('/turnos/horarios', [TurnoController::class, 'horarios'])->name('turnos.horarios');
+    
+    Route::get('/mis-citas', [TurnoController::class, 'index'])->name('mis-citas');
+    
+    Route::get('mi-salud', [MiSaludController::class, 'index'])->name('mi-salud');
+    
+    Route::get('mi-perfil', function () {
+        return view('mi-perfil');
+    })->name('mi-perfil');
+    Route::put('/perfil/actualizar', [MiPerfilController::class, 'actualizar'])->name('perfil.actualizar');
+    
+    Route::get('/mi-historial', [MiHistorialController::class, 'index'])->name('mi-historial');
+    
+    Route::view('profile', 'profile')->name('profile');
+});
 
 Route::get('mi-agenda', function () {
     return view('mi-agenda');
 })->name('mi-agenda');
-
-Route::get('mi-perfil', function () {
-    return view('mi-perfil');
-})->name('mi-perfil');
-
-Route::put('/perfil/actualizar', [MiPerfilController::class, 'actualizar'])->name('perfil.actualizar');
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/mi-historial', [MiHistorialController::class, 'index'])
-        ->name('mi-historial');
-});
 
 Route::get('abm', function () {
     return view('abm');
@@ -49,16 +52,7 @@ Route::get('login', function () {
 })->name('login');
 
 Route::get('contacto', [ContactoController::class, 'index'])->name('contacto');
-
 Route::post('contacto', [ContactoController::class, 'store'])->name('contacto.store');
-
-Route::get('mis-citas', function () {
-    return view('mis-citas');
-})->name('mis-citas');
-
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
 
 Route::get('test-register', App\Livewire\TestRegister::class)->name('test-register');
 Route::get('test-livewire', function () {
