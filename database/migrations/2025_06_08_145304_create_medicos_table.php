@@ -13,10 +13,6 @@ return new class extends Migration
     {
         Schema::create('medicos', function (Blueprint $table) {
             $table->id();
-            // Relación con la tabla usuarios
-            $table->unsignedBigInteger('usuario_id')->unique();
-            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
-
             $table->string('apellido', 100);
             $table->string('nro_matricula', 50)->unique();
             $table->string('especialidad', 100);

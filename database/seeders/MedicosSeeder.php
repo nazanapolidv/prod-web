@@ -9,7 +9,6 @@ class MedicosSeeder extends Seeder
 {
     public function run()
     {
-        // Crea 50 medicos falsos
         Medico::factory()->count(50)->create();
     }
 }

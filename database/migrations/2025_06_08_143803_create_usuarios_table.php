@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('apellido', 100);
             $table->enum('tipo_doc', ['dni', 'pasaporte', 'cedula']);
             $table->string('documento', 20)->unique();
-            $table->enum('genero', ['masculino', 'femenino', 'no-binario']);
+            $table->enum('genero', ['M', 'F', 'O']);
             $table->date('fecha_nac');
             $table->string('telefono', 20);
             $table->string('email', 100)->unique();
             $table->string('password', 255);
-            $table->enum('rol', ['paciente', 'medico', 'administrador']);
+            $table->enum('rol', ['paciente', 'administrador']);
             $table->timestamps();
         });
     }

@@ -1,5 +1,8 @@
-php artisan serve --host=127.0.0.1 --port=8001
+php artisan serve
 npm run dev
 
-usuario@gmail.com
-abcd1234
+juan.perez@example.com
+password123
+
+admin@hospital.com
+admin123
