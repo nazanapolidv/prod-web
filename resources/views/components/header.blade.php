@@ -5,7 +5,11 @@
     <nav class="menu">
         <ul class="menu_list">
             <li><a href="/">Inicio</a></li>
-            <li><a href="{{route('mi-salud')}}">Mi Salud</a></li>
+            @if(Auth::check() && Auth::user()->rol === 'administrador')
+                <li><a href="{{route('administrador.abm')}}">ABM Usuarios</a></li>
+                @elseif(Auth::check() && Auth::user()->rol === 'paciente')
+                <li><a href="{{route('mi-salud')}}">Mi Salud</a></li>
+            @endif
             <li><a href="{{route('contacto')}}">Contacto</a></li>
         </ul>
     </nav>
@@ -21,12 +25,6 @@
             </button>
 
             <div class="dropdown-menu">
-                @if(Auth::user()->role === 'admin')
-                <a href="{{ route('admin.dashboard') }}">Panel Admin</a>
-                @elseif(Auth::user()->role === 'paciente')
-                <a href="{{ route('paciente.turnos') }}">Mis Turnos</a>
-                @endif
-
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit">Cerrar sesión</button>

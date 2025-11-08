@@ -20,18 +20,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/turnos/{turno}', [TurnoController::class, 'destroy'])->name('turnos.destroy');
     Route::get('/turnos/medicos/{especialidad}', [TurnoController::class, 'medicos'])->name('turnos.medicos');
     Route::get('/turnos/horarios', [TurnoController::class, 'horarios'])->name('turnos.horarios');
-    
+
     Route::get('/mis-citas', [TurnoController::class, 'index'])->name('mis-citas');
-    
+
     Route::get('mi-salud', [MiSaludController::class, 'index'])->name('mi-salud');
-    
+
     Route::get('mi-perfil', function () {
         return view('mi-perfil');
     })->name('mi-perfil');
     Route::put('/perfil/actualizar', [MiPerfilController::class, 'actualizar'])->name('perfil.actualizar');
-    
+
     Route::get('/mi-historial', [MiHistorialController::class, 'index'])->name('mi-historial');
-    
+
     Route::view('profile', 'profile')->name('profile');
 });
 
@@ -39,9 +39,9 @@ Route::get('mi-agenda', function () {
     return view('mi-agenda');
 })->name('mi-agenda');
 
-Route::get('abm', function () {
+Route::get('/administrador/abm', function () {
     return view('abm');
-})->name('abm');
+})->name('administrador.abm');
 
 Route::get('registro', function () {
     return view('register');
