@@ -24,11 +24,59 @@ class TurnoController extends Controller
 
         return view('mis-citas', compact('turnos'));
     }
-
-    public function create()
+    public function create(Request $request)
     {
         $especialidades = Especialidad::orderBy('nombre')->get();
-        return view('solicitar-turno', compact('especialidades'));
+
+        $selectedEspecialidadId = $request->input('especialidad_id');
+        $selectedMedicoId = $request->input('medico_id');
+        $selectedFecha = $request->input('fecha');
+
+        $medicos = collect();
+        $horariosDisponibles = [];
+
+        if ($selectedEspecialidadId) {
+            $especialidad = Especialidad::find($selectedEspecialidadId);
+            if ($especialidad) {
+                $medicos = Medico::where('especialidad', $especialidad->nombre)
+                             ->orderBy('apellido')
+                             ->get();
+            }
+        }
+
+        if ($selectedMedicoId && $selectedFecha) {
+            $horariosDisponibles = $this->getAvailableSlotsForDate($selectedMedicoId, $selectedFecha);
+        }
+
+        return view('solicitar-turno', [
+            'especialidades' => $especialidades,
+            'medicos' => $medicos,
+            'horariosDisponibles' => $horariosDisponibles,
+            'selectedEspecialidadId' => $selectedEspecialidadId,
+            'selectedMedicoId' => $selectedMedicoId,
+            'selectedFecha' => $selectedFecha,
+        ]);
+    }
+
+    private function getAvailableSlotsForDate($medico_id, $fecha)
+    {
+        $horariosBase = [];
+        
+        $inicio = Carbon::parse($fecha)->startOfDay()->setHour(8);
+        $fin = Carbon::parse($fecha)->startOfDay()->setHour(17);
+
+        while ($inicio < $fin) {
+            $horariosBase[] = $inicio->format('H:i');
+            $inicio->addMinutes(30);
+        }
+
+        $turnosOcupados = Turno::where('medico_id', $medico_id)
+            ->where('fecha', $fecha)
+            ->pluck('hora')
+            ->map(fn($hora) => Carbon::parse($hora)->format('H:i'))
+            ->toArray();
+
+        return array_values(array_diff($horariosBase, $turnosOcupados));
     }
 
     public function getMedicos($especialidad_nombre)
@@ -100,13 +148,15 @@ class TurnoController extends Controller
             'especialidad_id' => 'required|exists:especialidades,id',
             'medico_id' => 'required|exists:medicos,id',
             'fecha' => 'required|date|after_or_equal:today',
-            'hora' => 'required',
+            'hora' => 'required|date_format:H:i',
             'observaciones' => 'nullable|string|max:500',
         ]);
         
+        $horaFormateada = Carbon::parse($request->hora)->format('H:i:s');
+
         $existeTurno = Turno::where('medico_id', $request->medico_id)
             ->where('fecha', $request->fecha)
-            ->where('hora', $request->hora)
+            ->where('hora', $horaFormateada)
             ->exists();
             
         if ($existeTurno) {
@@ -120,7 +170,8 @@ class TurnoController extends Controller
             'medico_id' => $request->medico_id,
             'especialidad_id' => $request->especialidad_id,
             'fecha' => $request->fecha,
-            'hora' => $request->hora,
+            'hora' => $horaFormateada, 
+            'observaciones' => $request->observaciones,
         ]);
         
         return redirect()->route('mis-citas')

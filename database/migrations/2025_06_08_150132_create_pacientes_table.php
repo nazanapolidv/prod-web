@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('pacientes', function (Blueprint $table) {
             $table->id();
-            // Relación con la tabla usuarios
             $table->unsignedBigInteger('usuario_id')->unique();
             $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
 

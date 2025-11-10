@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('turnos', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('paciente_id')->constrained('pacientes');
+            $table->foreignId('paciente_id')->constrained('usuarios');
             $table->foreignId('medico_id')->constrained('medicos');
             $table->foreignId('especialidad_id')->constrained('especialidades');
 

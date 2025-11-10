@@ -27,11 +27,12 @@
             <div class="card_container">
                 @forelse($turnos as $t)
                 @php
-                $dt = $t->hora
-                ? \Carbon\Carbon::parse($t->fecha.' '.$t->hora)
-                : \Carbon\Carbon::parse($t->fecha);
+                // Convertimos la fecha a una cadena 'Y-m-d' antes de unirla con la hora
+                $fechaYHora = $t->fecha->toDateString() . ' ' . $t->hora;
+                $dt = \Carbon\Carbon::parse($fechaYHora);
 
-                $fechaHumana = $dt->translatedFormat('d \d\e F \d\e Y');
+                // Formateamos para que muestre fecha y hora
+                $fechaHumana = $dt->translatedFormat('d \d\e F \d\e Y \a \l\a\s H:i \h\s');
                 $medico = trim(($t->medico->nombre ?? '').' '.($t->medico->apellido ?? '')) ?: '—';
                 @endphp
 
@@ -63,7 +64,7 @@
 
             <div class="container_button">
                 <div class="button">
-                    <a class="primary_button" href="{{ route('solicitar-turno') }}">Solicitar turno</a>
+                    <a class="primary_button" href="{{ route('turnos.create') }}">Solicitar turno</a>
                 </div>
             </div>
         </div>
