@@ -3,14 +3,14 @@
 @section('content')
 <div>
     @if ($errors->any())
-        <div style="background: #f8d7da; color: #721c24; padding: 10px; margin: 10px; border: 1px solid #f5c6cb; border-radius: 4px;">
-            <strong>Por favor corrige los siguientes errores:</strong>
-            <ul style="margin: 10px 0 0 20px;">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+    <div style="background: #f8d7da; color: #721c24; padding: 10px; margin: 10px; border: 1px solid #f5c6cb; border-radius: 4px;">
+        <strong>Por favor corrige los siguientes errores:</strong>
+        <ul style="margin: 10px 0 0 20px;">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
     @endif
 
     <div class="container_registro">
@@ -19,15 +19,15 @@
                 <img src="{{ Vite::asset('resources/assets/logo.png') }}" alt="Hospital Polaco" />
             </a>
         </div>
-        
+
         <div class="form_group">
             <h1 class="title">Registrarse</h1>
         </div>
-        
+
         <div class="container_form">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
-                
+
                 <div class="form_group">
                     <label for="nombre">Nombre</label>
                     <input type="text" id="nombre" name="nombre" value="{{ old('nombre') }}" placeholder="Juan" required />
@@ -57,9 +57,9 @@
                     <label for="genero">Género</label>
                     <select name="genero" id="genero" required>
                         <option value="" disabled {{ old('genero') ? '' : 'selected' }}>Selecciona</option>
-                        <option value="masculino" {{ old('genero') == 'masculino' ? 'selected' : '' }}>Masculino</option>
-                        <option value="femenino" {{ old('genero') == 'femenino' ? 'selected' : '' }}>Femenino</option>
-                        <option value="no-binario" {{ old('genero') == 'no-binario' ? 'selected' : '' }}>No binario</option>
+                        <option value="M" {{ old('genero') == 'M' ? 'selected' : '' }}>Masculino</option>
+                        <option value="F" {{ old('genero') == 'F' ? 'selected' : '' }}>Femenino</option>
+                        <option value="O" {{ old('genero') == 'O' ? 'selected' : '' }}>Otro</option>
                     </select>
                 </div>
 

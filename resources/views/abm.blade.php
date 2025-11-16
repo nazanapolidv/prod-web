@@ -28,13 +28,15 @@
                             </div>
                         </div>
                     </a>
-                    <div class="card">
-                        <div class="card-content">
-                            <img src="{{Vite::asset('resources/assets/registros.png')}}" alt="Registros">
-                            <h3>Registros</h3>
-                            <p>Control de registros y egresos de empleados</p>
+                    <a href="{{ route('administrador.registros.index') }}" class="card-link">
+                        <div class="card">
+                            <div class="card-content">
+                                <img src="{{Vite::asset('resources/assets/registros.png')}}" alt="Registros">
+                                <h3>Registros</h3>
+                                <p>Control de registros y egresos de empleados</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>

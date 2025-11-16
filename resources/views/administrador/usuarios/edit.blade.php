@@ -78,9 +78,9 @@
                             <label for="genero">Género *</label>
                             <select id="genero" name="genero" required>
                                 <option value="">Seleccione...</option>
-                                <option value="masculino" {{ old('genero', $usuario->genero) == 'masculino' ? 'selected' : '' }}>Masculino</option>
-                                <option value="femenino" {{ old('genero', $usuario->genero) == 'femenino' ? 'selected' : '' }}>Femenino</option>
-                                <option value="no-binario" {{ old('genero', $usuario->genero) == 'no-binario' ? 'selected' : '' }}>No-binario</option>
+                                <option value="M" {{ old('genero', $usuario->genero) == 'M' ? 'selected' : '' }}>Masculino</option>
+                                <option value="F" {{ old('genero', $usuario->genero) == 'F' ? 'selected' : '' }}>Femenino</option>
+                                <option value="O" {{ old('genero', $usuario->genero) == 'O' ? 'selected' : '' }}>Otro</option>
                             </select>
                             @error('genero')
                             <span class="error">{{ $message }}</span>

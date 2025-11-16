@@ -38,15 +38,15 @@ class RegisterForm extends Component
     {
         // Debug más visible
         session()->flash('debug', 'Método register ejecutado con datos: ' . json_encode($this->all()));
-        
+
         logger('Método register llamado', $this->all());
-        
+
         $validated = $this->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
             'tipo_doc' => 'required|string',
             'documento' => 'required|string|max:20|unique:usuarios,documento',
-            'genero' => 'required|string',
+            'genero' => 'required|in:M,F,O',
             'fecha_nac' => 'required|date',
             'telefono' => 'required|string|max:20',
             'email' => 'required|email|max:255|unique:usuarios,email',

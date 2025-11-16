@@ -32,7 +32,7 @@ class RegisterController extends Controller
             'apellido' => ['required', 'string', 'max:255'],
             'tipo_doc' => ['required', 'string'],
             'documento' => ['required', 'string', 'max:20', 'unique:usuarios,documento'],
-            'genero' => ['required', 'string'],
+            'genero' => ['required', 'in:M,F,O'],
             'fecha_nac' => ['required', 'date'],
             'telefono' => ['required', 'string', 'max:20'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:usuarios,email'],
