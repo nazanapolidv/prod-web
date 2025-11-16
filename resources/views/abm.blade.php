@@ -19,24 +19,18 @@
 
             <div class="container_especializaciones">
                 <div class="card_container">
-                    <div class="card">
-                        <img src="{{asset('gestiondeusuario.png')}}"
-                            alt="Gestión de usuarios" />
-                        <div class="card-content">
-                            <h3>Gestión de usuarios</h3>
-                            <p>Administra las cuentas de pacientes o médicos</p>
+                    <a href="{{ route('administrador.usuarios.index') }}" class="card-link">
+                        <div class="card">
+                            <div class="card-content">
+                                <img src="{{Vite::asset('resources/assets/gestiondeusuario.png')}}" alt="Gestion de Usuarios">
+                                <h3>Gestión de usuarios</h3>
+                                <p>Administra las cuentas de pacientes o médicos</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                     <div class="card">
-                        <img src="{{asset('estadisticas.png')}}" alt="estadisticas" />
                         <div class="card-content">
-                            <h3>Estadísticas</h3>
-                            <p>Visor de estadísticas de pacientes o médicos</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="{{asset('registros.png')}}" alt="Registros" />
-                        <div class="card-content">
+                            <img src="{{Vite::asset('resources/assets/registros.png')}}" alt="Registros">
                             <h3>Registros</h3>
                             <p>Control de registros y egresos de empleados</p>
                         </div>

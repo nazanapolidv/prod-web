@@ -6,9 +6,9 @@
         <ul class="menu_list">
             <li><a href="/">Inicio</a></li>
             @if(Auth::check() && Auth::user()->rol === 'administrador')
-                <li><a href="{{route('administrador.abm')}}">ABM Usuarios</a></li>
-                @elseif(Auth::check() && Auth::user()->rol === 'paciente')
-                <li><a href="{{route('mi-salud')}}">Mi Salud</a></li>
+            <li><a href="{{route('administrador.abm')}}">Panel</a></li>
+            @elseif(Auth::check() && Auth::user()->rol === 'paciente')
+            <li><a href="{{route('mi-salud')}}">Mi Salud</a></li>
             @endif
             <li><a href="{{route('contacto')}}">Contacto</a></li>
         </ul>

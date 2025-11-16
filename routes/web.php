@@ -6,6 +6,7 @@ use App\Http\Controllers\MisCitasController;
 use App\Http\Controllers\MiSaludController;
 use App\Http\Controllers\MiPerfilController;
 use App\Http\Controllers\TurnoController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
@@ -33,9 +34,13 @@ Route::middleware('auth')->group(function () {
 Route::get('mi-agenda', function () {
     return view('mi-agenda');
 })->name('mi-agenda');
-Route::get('/administrador/abm', function () {
-    return view('abm');
-})->name('administrador.abm');
+Route::middleware(['auth', 'admin'])->prefix('administrador')->name('administrador.')->group(function () {
+    Route::get('/abm', function () {
+        return view('abm');
+    })->name('abm');
+
+    Route::resource('usuarios', UsuarioController::class);
+});
 Route::get('registro', function () {
     return view('register');
 })->name('registro');

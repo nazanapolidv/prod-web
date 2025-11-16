@@ -5,6 +5,12 @@
     justify-content: center;
     flex-direction: row;
 }
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .card {
     width: 240px;
     background-color: #ffffff;
