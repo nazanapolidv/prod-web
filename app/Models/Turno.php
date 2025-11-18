@@ -10,7 +10,7 @@ class Turno extends Model
     protected $table = 'turnos';
 
     protected $fillable = [
-        'fecha', 'hora', 'paciente_id', 'medico_id', 'especialidad_id'
+        'fecha', 'hora', 'paciente_id', 'medico_id', 'especialidad_id', 'estado', 'observaciones'
     ];
 
     protected $casts = [
@@ -19,7 +19,7 @@ class Turno extends Model
 
     public function paciente(): BelongsTo
     {
-        return $this->belongsTo(Paciente::class, 'paciente_id');
+        return $this->belongsTo(Usuario::class, 'paciente_id');
     }
 
     public function medico(): BelongsTo

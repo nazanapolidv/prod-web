@@ -9,6 +9,8 @@
             <li><a href="{{route('administrador.abm')}}">Panel</a></li>
             @elseif(Auth::check() && Auth::user()->rol === 'paciente')
             <li><a href="{{route('mi-salud')}}">Mi Salud</a></li>
+            @elseif(Auth::check() && Auth::user()->rol === 'medico')
+            <li><a href="{{route('medico.agenda')}}">Mi Agenda</a></li>
             @endif
             <li><a href="{{route('contacto')}}">Contacto</a></li>
         </ul>

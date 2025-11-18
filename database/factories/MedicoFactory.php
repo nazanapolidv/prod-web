@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Especialidad;
+use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MedicoFactory extends Factory
@@ -19,12 +20,26 @@ class MedicoFactory extends Factory
             'viernes' => ['08:00', '17:00'],
         ];
 
+        // Buscar un usuario médico existente sin médico asignado, o crear uno si no existe
+        $usuario = Usuario::where('rol', 'medico')
+            ->whereDoesntHave('medico')
+            ->inRandomOrder()
+            ->first();
+
+        if (!$usuario) {
+            // Si no hay usuarios médicos disponibles, crear uno
+            $usuario = Usuario::factory()->create([
+                'rol' => 'medico',
+            ]);
+        }
+
         return [
-            'apellido' => $this->faker->lastName(),
+            'usuario_id' => $usuario->id,
+            'apellido' => $usuario->apellido,
             'especialidad' => $especialidad ? $especialidad->nombre : 'Clínica Médica',
             'nro_matricula' => 'MP' . $this->faker->unique()->numberBetween(10000, 99999),
             'consultorio' => $this->faker->numberBetween(100, 500),
-            'horarios_disponibilidad' => json_encode($horariosDisponibilidad),
+            'horarios_disponibilidad' => $horariosDisponibilidad,
         ];
     }
 }

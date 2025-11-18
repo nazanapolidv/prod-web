@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\MedicoAgendaController;
 use App\Http\Controllers\MiHistorialController;
 use App\Http\Controllers\MisCitasController;
 use App\Http\Controllers\MiSaludController;
@@ -32,9 +33,15 @@ Route::middleware('auth')->group(function () {
     Route::view('profile', 'profile')->name('profile');
 });
 
-Route::get('mi-agenda', function () {
-    return view('mi-agenda');
-})->name('mi-agenda');
+// Rutas para médicos
+Route::middleware(['auth', 'medico'])->prefix('mi-agenda')->name('medico.')->group(function () {
+    Route::get('/completar-perfil', [MedicoAgendaController::class, 'completarPerfil'])->name('completar-perfil');
+    Route::post('/completar-perfil', [MedicoAgendaController::class, 'guardarPerfil'])->name('guardar-perfil');
+    Route::get('/', [MedicoAgendaController::class, 'index'])->name('agenda');
+    Route::put('/turnos/{turno}/estado', [MedicoAgendaController::class, 'updateEstado'])->name('turnos.update-estado');
+    Route::put('/turnos/{turno}/observaciones', [MedicoAgendaController::class, 'agregarObservaciones'])->name('turnos.observaciones');
+});
+
 Route::middleware(['auth', 'admin'])->prefix('administrador')->name('administrador.')->group(function () {
     Route::get('/abm', function () {
         return view('abm');
