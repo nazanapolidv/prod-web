@@ -26,7 +26,7 @@ class TurnoController extends Controller
     }
     public function create(Request $request)
     {
-        $especialidades = Especialidad::orderBy('nombre_especialidad')->get();
+        $especialidades = Especialidad::orderBy('nombre')->get();
 
         $selectedEspecialidadId = $request->input('especialidad_id');
         $selectedMedicoId = $request->input('medico_id');
