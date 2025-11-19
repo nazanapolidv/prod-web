@@ -12,6 +12,7 @@ class Medico extends Model
     protected $table = 'medicos';
     
     protected $fillable = [
+        'usuario_id',
         'apellido',
         'especialidad',
         'nro_matricula',
@@ -26,5 +27,10 @@ class Medico extends Model
     public function turnos()
     {
         return $this->hasMany(Turno::class);
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'usuario_id');
     }
 }

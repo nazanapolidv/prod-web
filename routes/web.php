@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\MedicoAgendaController;
 use App\Http\Controllers\MiHistorialController;
 use App\Http\Controllers\MisCitasController;
 use App\Http\Controllers\MiSaludController;
 use App\Http\Controllers\MiPerfilController;
+use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\TurnoController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
@@ -30,12 +33,25 @@ Route::middleware('auth')->group(function () {
     Route::view('profile', 'profile')->name('profile');
 });
 
-Route::get('mi-agenda', function () {
-    return view('mi-agenda');
-})->name('mi-agenda');
-Route::get('/administrador/abm', function () {
-    return view('abm');
-})->name('administrador.abm');
+// Rutas para médicos
+Route::middleware(['auth', 'medico'])->prefix('mi-agenda')->name('medico.')->group(function () {
+    Route::get('/completar-perfil', [MedicoAgendaController::class, 'completarPerfil'])->name('completar-perfil');
+    Route::post('/completar-perfil', [MedicoAgendaController::class, 'guardarPerfil'])->name('guardar-perfil');
+    Route::get('/', [MedicoAgendaController::class, 'index'])->name('agenda');
+    Route::put('/turnos/{turno}/estado', [MedicoAgendaController::class, 'updateEstado'])->name('turnos.update-estado');
+    Route::put('/turnos/{turno}/observaciones', [MedicoAgendaController::class, 'agregarObservaciones'])->name('turnos.observaciones');
+});
+
+Route::middleware(['auth', 'admin'])->prefix('administrador')->name('administrador.')->group(function () {
+    Route::get('/abm', function () {
+        return view('abm');
+    })->name('abm');
+
+    Route::resource('usuarios', UsuarioController::class);
+    Route::resource('registros', RegistroController::class)->parameters([
+        'registros' => 'empleado'
+    ]);
+});
 Route::get('registro', function () {
     return view('register');
 })->name('registro');

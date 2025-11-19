@@ -37,4 +37,17 @@ class Usuario extends Authenticatable
         'password' => 'hashed',
         'fecha_nac' => 'date',
     ];
+
+    /**
+     * Accessor para el atributo name (compatibilidad con Laravel)
+     */
+    public function getNameAttribute()
+    {
+        return $this->nombre;
+    }
+
+    public function medico()
+    {
+        return $this->hasOne(Medico::class, 'usuario_id');
+    }
 }

@@ -62,5 +62,10 @@ class UsuariosSeeder extends Seeder
         Usuario::factory()->count(20)->create([
             'rol' => 'paciente',
         ]);
+
+        // Crear usuarios médicos para que MedicosSeeder los use
+        Usuario::factory()->count(15)->create([
+            'rol' => 'medico',
+        ]);
     }
 }

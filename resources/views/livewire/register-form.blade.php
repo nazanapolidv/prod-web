@@ -1,22 +1,22 @@
 @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/registro.css'])
 <div>
   @if (session('debug'))
-    <div style="background: yellow; padding: 10px; margin: 10px; border: 1px solid red;">
-      <strong>DEBUG:</strong> {{ session('debug') }}
-    </div>
+  <div style="background: yellow; padding: 10px; margin: 10px; border: 1px solid red;">
+    <strong>DEBUG:</strong> {{ session('debug') }}
+  </div>
   @endif
-  
+
   @if ($errors->any())
-    <div style="background: red; color: white; padding: 10px; margin: 10px;">
-      <strong>Errores:</strong>
-      <ul>
-        @foreach ($errors->all() as $error)
-          <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
+  <div style="background: red; color: white; padding: 10px; margin: 10px;">
+    <strong>Errores:</strong>
+    <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
   @endif
-  
+
   <div class="container_registro">
     <div class="main_image">
       <a href="{{route('home')}}" class="logo flex justify-center items-center w-auto">
@@ -62,9 +62,9 @@
           <label for="genero">Género</label>
           <select wire:model="genero" name="genero" id="genero" required>
             <option value="" disabled selected>Selecciona</option>
-            <option value="masculino">Masculino</option>
-            <option value="femenino">Femenino</option>
-            <option value="no-binario">No binario</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+            <option value="O">Otro</option>
           </select>
         </div>
 
