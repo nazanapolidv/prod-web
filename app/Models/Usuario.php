@@ -38,9 +38,6 @@ class Usuario extends Authenticatable
         'fecha_nac' => 'date',
     ];
 
-    /**
-     * Accessor para el atributo name (compatibilidad con Laravel)
-     */
     public function getNameAttribute()
     {
         return $this->nombre;
@@ -49,5 +46,9 @@ class Usuario extends Authenticatable
     public function medico()
     {
         return $this->hasOne(Medico::class, 'usuario_id');
+    }
+    public function hasRole($rol)
+    {
+        return $this->rol === $rol;
     }
 }

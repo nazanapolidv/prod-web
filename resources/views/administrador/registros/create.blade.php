@@ -83,9 +83,7 @@
                             <select id="tipo_empleado" name="tipo_empleado" required onchange="toggleCamposMedico()">
                                 <option value="">Seleccione...</option>
                                 <option value="medico" {{ old('tipo_empleado') == 'medico' ? 'selected' : '' }}>Médico</option>
-                                <option value="enfermero" {{ old('tipo_empleado') == 'enfermero' ? 'selected' : '' }}>Enfermero</option>
                                 <option value="administrativo" {{ old('tipo_empleado') == 'administrativo' ? 'selected' : '' }}>Administrativo</option>
-                                <option value="mantenimiento" {{ old('tipo_empleado') == 'mantenimiento' ? 'selected' : '' }}>Mantenimiento</option>
                             </select>
                             @error('tipo_empleado')
                             <span class="error">{{ $message }}</span>

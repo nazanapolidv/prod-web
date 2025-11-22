@@ -126,19 +126,9 @@
     color: #ffffff;
 }
 
-.tipo-badge.tipo-enfermero {
-    background-color: #17a2b8;
-    color: #ffffff;
-}
-
 .tipo-badge.tipo-administrativo {
     background-color: #ffc107;
     color: #000;
-}
-
-.tipo-badge.tipo-mantenimiento {
-    background-color: #6c757d;
-    color: #ffffff;
 }
 
 .estado-badge.estado-activo {

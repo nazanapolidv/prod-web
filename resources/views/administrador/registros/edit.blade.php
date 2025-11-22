@@ -84,9 +84,7 @@
                             <select id="tipo_empleado" name="tipo_empleado" required onchange="toggleCamposMedico()">
                                 <option value="">Seleccione...</option>
                                 <option value="medico" {{ old('tipo_empleado', $empleado->tipo_empleado) == 'medico' ? 'selected' : '' }}>Médico</option>
-                                <option value="enfermero" {{ old('tipo_empleado', $empleado->tipo_empleado) == 'enfermero' ? 'selected' : '' }}>Enfermero</option>
                                 <option value="administrativo" {{ old('tipo_empleado', $empleado->tipo_empleado) == 'administrativo' ? 'selected' : '' }}>Administrativo</option>
-                                <option value="mantenimiento" {{ old('tipo_empleado', $empleado->tipo_empleado) == 'mantenimiento' ? 'selected' : '' }}>Mantenimiento</option>
                             </select>
                             @error('tipo_empleado')
                             <span class="error">{{ $message }}</span>
@@ -94,7 +92,7 @@
                         </div>
                     </div>
 
-                    <div class="form-row" id="campos-medico" style="display: {{ old('tipo_empleado', $empleado->tipo_empleado) == 'medico' ? 'flex' : 'none' }};">
+                    <div class="form-row" id="campos-medico" @if(old('tipo_empleado', $empleado->tipo_empleado) == 'medico') style="display:flex;" @else style="display:none;" @endif>
                         <div class="form_group">
                             <label for="nro_matricula">Número de Matrícula *</label>
                             <input type="text" id="nro_matricula" name="nro_matricula"
@@ -194,7 +192,6 @@
             }
         }
 
-        // Ejecutar al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
             toggleCamposMedico();
         });

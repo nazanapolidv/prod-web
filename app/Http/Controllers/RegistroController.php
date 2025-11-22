@@ -40,7 +40,7 @@ class RegistroController extends Controller
         }
 
         $empleados = $query->orderBy('created_at', 'desc')->paginate(15);
-        $tipos = ['medico', 'enfermero', 'administrativo', 'mantenimiento'];
+        $tipos = ['medico', 'administrador'];
 
         return view('administrador.registros.index', compact('empleados', 'tipos'));
     }
@@ -65,7 +65,7 @@ class RegistroController extends Controller
             'documento' => ['required', 'string', 'max:20', 'unique:empleados,documento'],
             'telefono' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:100'],
-            'tipo_empleado' => ['required', 'in:medico,enfermero,administrativo,mantenimiento'],
+            'tipo_empleado' => ['required', 'in:medico,administrador'],
             'fecha_ingreso' => ['required', 'date'],
             'nro_matricula' => ['nullable', 'string', 'max:50', 'required_if:tipo_empleado,medico'],
             'especialidad' => ['nullable', 'string', 'max:100', 'required_if:tipo_empleado,medico'],
@@ -106,7 +106,7 @@ class RegistroController extends Controller
             'documento' => ['required', 'string', 'max:20', Rule::unique('empleados')->ignore($empleado->id)],
             'telefono' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:100'],
-            'tipo_empleado' => ['required', 'in:medico,enfermero,administrativo,mantenimiento'],
+            'tipo_empleado' => ['required', 'in:medico,administrador'],
             'fecha_ingreso' => ['required', 'date'],
             'fecha_egreso' => ['nullable', 'date', 'after_or_equal:fecha_ingreso'],
             'activo' => ['boolean'],

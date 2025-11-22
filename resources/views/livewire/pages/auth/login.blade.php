@@ -35,7 +35,6 @@ new #[Layout('layouts.guest')] class extends Component
 
 <body>
     <main>
-        <!-- Session Status -->
         <div class="container_inicio_sesion">
             <div class="main_image">
                 <a href="{{ route('home') }}" class="logo flex justify-center items-center w-auto">
@@ -46,6 +45,9 @@ new #[Layout('layouts.guest')] class extends Component
                 <h1 class="title">Iniciar sesion</h1>
             </div>
             <div class="container_form">
+                @if ($errors->isNotEmpty())
+                    <p class="form_error text-center">Las credenciales ingresadas no son válidas.</p>
+                @endif
                 <form class="flex flex-col" wire:submit.prevent="login">
                     <label for="email">Email</label>
                     <input

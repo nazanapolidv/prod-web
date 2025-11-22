@@ -36,7 +36,6 @@ class RegisterForm extends Component
 
     public function register(): void
     {
-        // Debug más visible
         session()->flash('debug', 'Método register ejecutado con datos: ' . json_encode($this->all()));
 
         logger('Método register llamado', $this->all());
@@ -54,7 +53,7 @@ class RegisterForm extends Component
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
-        $validated['rol'] = 'paciente'; // Rol por defecto
+        $validated['rol'] = 'paciente';
 
         $user = Usuario::create($validated);
 

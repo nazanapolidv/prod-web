@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             UsuariosSeeder::class,
             EspecialidadesSeeder::class,
             MedicosSeeder::class,
+            EmpleadosSeeder::class,
         ]);
     }
 }

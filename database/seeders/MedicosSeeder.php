@@ -11,7 +11,6 @@ class MedicosSeeder extends Seeder
 {
     public function run()
     {
-        // Obtener usuarios médicos que no tienen médico asignado
         $usuariosMedicos = Usuario::where('rol', 'medico')
             ->whereDoesntHave('medico')
             ->get();
@@ -28,7 +27,6 @@ class MedicosSeeder extends Seeder
             return;
         }
 
-        // Crear médicos para cada usuario médico disponible
         foreach ($usuariosMedicos as $usuario) {
             $especialidad = $especialidades->random();
 

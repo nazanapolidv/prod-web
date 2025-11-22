@@ -5,13 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hospital Polaco</title>
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
-    <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/index.css'])
 </head>
 
@@ -27,7 +24,7 @@
                 <p class="description_main text-center font-bold">Tu salud es nuestra prioridad. Ofrecemos atención médica de calidad y un equipo de profesionales dedicados a cuidar de vos y tu familia.</p>
             </div>
             <div class="container_button flex justify-center items-center">
-                @guest
+                <!-- @guest
                 <div class="button">
                     <a class="primary_button" href="{{ route('login') }}">Solicitar turno</a>
                 </div>
@@ -41,7 +38,24 @@
                 <div class="button">
                     <a class="secondary_button" href="{{ route('mi-historial') }}">Consultar resultados</a>
                 </div>
-                @endguest
+                @endguest -->
+                @if (!Auth::check())
+                <div class="button">
+                    <a class="primary_button" href="{{ route('login') }}">Solicitar turno</a>
+                </div>
+                <div class="button">
+                    <a class="secondary_button" href="{{ route('login') }}">Consultar resultados</a>
+                </div>
+                @elseif (Auth::user()->hasRole('paciente'))
+                <div class="button">
+                    <a class="primary_button" href="{{ route('mi-salud') }}">Solicitar turno</a>
+                </div>
+                <div class="button">
+                    <a class="secondary_button" href="{{ route('mi-historial') }}">Consultar resultados</a>
+                </div>
+                @elseif (Auth::user()->hasRole('medico'))
+                <div></div>
+                @endif
             </div>
             <div class="container_especializaciones">
                 <h2 class="subtitle">Especializaciones</h2>

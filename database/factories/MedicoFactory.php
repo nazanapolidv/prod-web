@@ -20,14 +20,12 @@ class MedicoFactory extends Factory
             'viernes' => ['08:00', '17:00'],
         ];
 
-        // Buscar un usuario médico existente sin médico asignado, o crear uno si no existe
         $usuario = Usuario::where('rol', 'medico')
             ->whereDoesntHave('medico')
             ->inRandomOrder()
             ->first();
 
         if (!$usuario) {
-            // Si no hay usuarios médicos disponibles, crear uno
             $usuario = Usuario::factory()->create([
                 'rol' => 'medico',
             ]);
