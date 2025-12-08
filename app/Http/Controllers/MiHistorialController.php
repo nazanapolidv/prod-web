@@ -1,8 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Paciente;
 use App\Models\Turno;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -11,9 +9,9 @@ class MiHistorialController extends Controller
 {
     public function index()
     {
-        $paciente = Paciente::where('usuario_id', Auth::id())->first();
+        $usuarioId = Auth::id();
 
-        if (!$paciente) {
+        if (!$usuarioId) {
             return view('mi-historial', [
                 'turnos' => collect(),
                 'paginated' => false
@@ -25,9 +23,9 @@ class MiHistorialController extends Controller
 
         $turnos = Turno::with([
                 'especialidad:id,nombre',
-                'medico:id,nombre,apellido'
+                'medico:id,apellido'
             ])
-            ->where('paciente_id', $paciente->id)
+            ->where('paciente_id', $usuarioId)
             ->where(function ($q) use ($hoy, $ahora) {
                 $q->where('fecha', '<', $hoy)
                   ->orWhere(function ($q2) use ($hoy, $ahora) {
@@ -45,4 +43,3 @@ class MiHistorialController extends Controller
         ]);
     }
 }
-

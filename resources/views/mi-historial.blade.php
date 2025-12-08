@@ -24,6 +24,7 @@
           <th>Hora</th>
           <th>Especialidad</th>
           <th>Médico</th>
+          <th>Observaciones</th>
         </tr>
       </thead>
       <tbody>
@@ -38,6 +39,7 @@
               @endphp
               {{ $medicoNombre !== '' ? $medicoNombre : '—' }}
             </td>
+            <td>{{ $t->observaciones }}</td>
           </tr>
         @endforeach
       </tbody>
