@@ -16,14 +16,8 @@ class TurnosSeeder extends Seeder
      */
     public function run(): void
     {
-        // Obtener pacientes (usuarios con rol paciente)
         $pacientes = Usuario::where('rol', 'paciente')->get();
         
-        // Si no hay pacientes con rol específico, obtener todos los usuarios
-        if ($pacientes->isEmpty()) {
-            $pacientes = Usuario::all();
-        }
-
         $medicos = Medico::all();
         $especialidades = Especialidad::all();
 
@@ -37,7 +31,6 @@ class TurnosSeeder extends Seeder
                   '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'];
 
         $observaciones = [
-            null,
             'Control de rutina',
             'Seguimiento de tratamiento',
             'Primera consulta',
@@ -48,25 +41,20 @@ class TurnosSeeder extends Seeder
         ];
 
         foreach ($pacientes as $paciente) {
-            // Generar entre 2 y 6 turnos por paciente
-            $cantidadTurnos = rand(2, 6);
+            $cantidadTurnos = 6;
 
             for ($i = 0; $i < $cantidadTurnos; $i++) {
                 $medico = $medicos->random();
                 $especialidad = $especialidades->random();
                 
-                // Generar fecha: 50% pasado, 50% futuro
+                // generacion random de fechas pasadas y futuras, % de estados de esos turnos
                 if (rand(0, 1) === 0) {
-                    // Turno pasado (últimos 90 días)
                     $fecha = Carbon::now()->subDays(rand(1, 90));
-                    // Turnos pasados pueden estar completados o cancelados
                     $estado = $estados[array_rand(['completado', 'cancelado'])];
-                    $estado = rand(0, 4) < 4 ? 'completado' : 'cancelado'; // 80% completados
+                    $estado = rand(0, 4) < 4 ? 'completado' : 'cancelado';
                 } else {
-                    // Turno futuro (próximos 60 días)
                     $fecha = Carbon::now()->addDays(rand(1, 60));
-                    // Turnos futuros pueden estar pendientes o cancelados
-                    $estado = rand(0, 4) < 4 ? 'pendiente' : 'cancelado'; // 80% pendientes
+                    $estado = rand(0, 4) < 4 ? 'pendiente' : 'cancelado';
                 }
 
                 $hora = $horas[array_rand($horas)];
