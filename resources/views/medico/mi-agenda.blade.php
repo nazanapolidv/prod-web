@@ -29,16 +29,19 @@
             </div>
             @endif
 
-            <!-- Selector de fecha -->
+            <!-- selector -->
             <div style="margin-bottom: 20px;">
-                <form method="GET" action="{{ route('medico.agenda') }}" style="display: inline-block;">
-                    <label for="fecha" style="margin-right: 10px;">Ver fecha:</label>
+                <form method="GET" action="{{ route('medico.agenda') }}" style="display: flex; align-items: center; gap: 10px;">
+                    <label for="fecha">Ver fecha:</label>
                     <input type="date" id="fecha" name="fecha" value="{{ $fechaSeleccionada }}" 
-                           onchange="this.form.submit()" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                           style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    <button type="submit" style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                        Buscar
+                    </button>
                 </form>
             </div>
 
-            <!-- Citas del día seleccionado -->
+            <!-- turnos de hoy -->
             <h3 class="heading">Citas del {{ \Carbon\Carbon::parse($fechaSeleccionada)->translatedFormat('d \d\e F \d\e Y') }}</h3>
             
             @if($turnosDelDia->count() > 0)
@@ -50,7 +53,6 @@
                         <th>Especialidad</th>
                         <th>Estado</th>
                         <th>Observaciones</th>
-                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,30 +67,35 @@
                         </td>
                         <td>{{ $turno->especialidad->nombre ?? 'N/A' }}</td>
                         <td>
-                            <form method="POST" action="{{ route('medico.turnos.update-estado', $turno->id) }}" style="display: inline;">
+                            <form method="POST" action="{{ route('medico.turnos.update-estado', $turno->id) }}">
                                 @csrf
                                 @method('PUT')
-                                <select name="estado" onchange="this.form.submit()" 
-                                        style="padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
-                                    <option value="pendiente" {{ $turno->estado === 'pendiente' ? 'selected' : '' }}>Pendiente</option>
-                                    <option value="confirmada" {{ $turno->estado === 'confirmada' ? 'selected' : '' }}>Confirmada</option>
-                                    <option value="cancelada" {{ $turno->estado === 'cancelada' ? 'selected' : '' }}>Cancelada</option>
-                                    <option value="finalizada" {{ $turno->estado === 'finalizada' ? 'selected' : '' }}>Finalizada</option>
-                                </select>
+                                <div style="display: flex; gap: 5px;">
+                                    <select name="estado" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                                        <option value="pendiente" {{ $turno->estado === 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                                        <option value="confirmada" {{ $turno->estado === 'confirmada' ? 'selected' : '' }}>Confirmada</option>
+                                        <option value="cancelada" {{ $turno->estado === 'cancelada' ? 'selected' : '' }}>Cancelada</option>
+                                        <option value="finalizada" {{ $turno->estado === 'finalizada' ? 'selected' : '' }}>Finalizada</option>
+                                    </select>
+                                    <button type="submit" style="padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                                        ✓
+                                    </button>
+                                </div>
                             </form>
                         </td>
                         <td>
-                            @if($turno->observaciones)
-                            <small>{{ Str::limit($turno->observaciones, 50) }}</small>
-                            @else
-                            <small style="color: #999;">Sin observaciones</small>
-                            @endif
-                        </td>
-                        <td>
-                            <button onclick="mostrarObservaciones({{ $turno->id }}, '{{ addslashes($turno->observaciones ?? '') }}')" 
-                                    style="padding: 5px 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                                Observaciones
-                            </button>
+                            <form method="POST" action="{{ route('medico.turnos.observaciones', $turno->id) }}">
+                                @csrf
+                                @method('PUT')
+                                <div style="display: flex; flex-direction: column; gap: 5px;">
+                                    <textarea name="observaciones" rows="2" 
+                                              style="width: 200px; padding: 5px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;"
+                                              placeholder="Observaciones...">{{ $turno->observaciones }}</textarea>
+                                    <button type="submit" style="padding: 5px 10px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </form>
                         </td>
                     </tr>
                     @endforeach
@@ -100,7 +107,7 @@
             </div>
             @endif
 
-            <!-- Próximos turnos (próximos 7 días) -->
+            <!-- turnos proximos (7 dias) -->
             @if($turnosFuturos->count() > 0)
             <h3 class="heading" style="margin-top: 40px;">Próximos Turnos (Próximos 7 días)</h3>
             <table>
@@ -138,51 +145,7 @@
         </div>
     </main>
 
-    <!-- Modal para observaciones -->
-    <div id="modalObservaciones" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 8px; max-width: 500px; width: 90%;">
-            <h3 style="margin-top: 0;">Agregar/Editar Observaciones</h3>
-            <form method="POST" id="formObservaciones">
-                @csrf
-                @method('PUT')
-                <textarea name="observaciones" id="textareaObservaciones" rows="5" 
-                          style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 15px;"
-                          placeholder="Ingrese observaciones sobre este turno..."></textarea>
-                <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                    <button type="button" onclick="cerrarModal()" 
-                            style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                        Cancelar
-                    </button>
-                    <button type="submit" 
-                            style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                        Guardar
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <x-footer />
-
-    <script>
-        function mostrarObservaciones(turnoId, observacionesActuales) {
-            document.getElementById('textareaObservaciones').value = observacionesActuales;
-            document.getElementById('formObservaciones').action = '/mi-agenda/turnos/' + turnoId + '/observaciones';
-            document.getElementById('modalObservaciones').style.display = 'block';
-        }
-
-        function cerrarModal() {
-            document.getElementById('modalObservaciones').style.display = 'none';
-        }
-
-        // Cerrar modal al hacer clic fuera
-        document.getElementById('modalObservaciones').addEventListener('click', function(e) {
-            if (e.target === this) {
-                cerrarModal();
-            }
-        });
-    </script>
 </body>
 
 </html>
-

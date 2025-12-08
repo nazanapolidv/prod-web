@@ -23,6 +23,19 @@ class UsuariosSeeder extends Seeder
             'rol' => 'administrador',
         ]);
 
+        Usuario::create([
+            'nombre' => 'Carlos',
+            'apellido' => 'Fernández',
+            'tipo_doc' => 'DNI',
+            'documento' => '25678901',
+            'genero' => 'M',
+            'fecha_nac' => '1980-03-10',
+            'telefono' => '1199887766',
+            'email' => 'medico@hospital.com',
+            'password' => Hash::make('medico123'),
+            'rol' => 'medico',
+        ]);
+
         $pacientes = [
             [
                 'nombre' => 'Juan',

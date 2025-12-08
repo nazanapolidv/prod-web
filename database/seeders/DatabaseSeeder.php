@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Turno;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +14,7 @@ class DatabaseSeeder extends Seeder
             EspecialidadesSeeder::class,
             MedicosSeeder::class,
             EmpleadosSeeder::class,
+            TurnosSeeder::class
         ]);
     }
 }

@@ -26,6 +26,39 @@ class TurnosSeeder extends Seeder
             return;
         }
 
+        $medicoHardcodeado = Usuario::where('email', 'medico@hospital.com')->first();
+        if ($medicoHardcodeado) {
+            $medicoRecord = Medico::where('usuario_id', $medicoHardcodeado->id)->first();
+            $primerPaciente = $pacientes->first();
+            $primeraEspecialidad = $especialidades->first();
+
+            if ($medicoRecord && $primerPaciente && $primeraEspecialidad) {
+                // Turno para hoy
+                Turno::create([
+                    'paciente_id' => $primerPaciente->id,
+                    'medico_id' => $medicoRecord->id,
+                    'especialidad_id' => $primeraEspecialidad->id,
+                    'fecha' => Carbon::today()->format('Y-m-d'),
+                    'hora' => '10:00',
+                    'estado' => 'pendiente',
+                    'observaciones' => 'Turno de prueba para el médico hardcodeado',
+                ]);
+
+                // Turno para mañana
+                Turno::create([
+                    'paciente_id' => $primerPaciente->id,
+                    'medico_id' => $medicoRecord->id,
+                    'especialidad_id' => $primeraEspecialidad->id,
+                    'fecha' => Carbon::tomorrow()->format('Y-m-d'),
+                    'hora' => '14:30',
+                    'estado' => 'pendiente',
+                    'observaciones' => 'Seguimiento de control',
+                ]);
+
+                $this->command->info('Turnos hardcodeados creados para medico@hospital.com');
+            }
+        }
+
         $estados = ['pendiente', 'completado', 'cancelado'];
         $horas = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', 
                   '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'];
